@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create GCP credentials file with sudo
+        run: |
+          echo "Creating GCP credentials file..."
+          echo "${{ secrets.GCP_CREDENTIALS }}" | sudo tee /tmp/gcp-key.json > /dev/null
+
+
       - name: Deploy to GCP with sudo
         run: |
           echo "Deploying to GCP..."
