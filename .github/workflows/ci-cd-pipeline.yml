@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # עדכון לשימוש בגירסה v3 שמותאמת ל-Node.js חדש
 
       - name: Run tests
         run: echo "Running tests..." 
@@ -27,4 +27,4 @@ jobs:
         run: |
           echo "Deploying to GCP..."
           gcloud auth activate-service-account --key-file ${{ secrets.GCP_CREDENTIALS }}
-          gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
+          gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh 
