@@ -13,11 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create GCP credentials file with sudo
+      - name: Create GCP credentials file with Python
         run: |
           echo "Creating GCP credentials file..."
-          echo "${{ secrets.GCP_CREDENTIALS }}" | sudo tee /tmp/gcp-key.json > /dev/null
+          sudo python3 -c 'import os, json; json_content = os.getenv("GCP_CREDENTIALS"); with open("/tmp/gcp-key.json", "w") as f: f.write(json_content)'
 
+      - name: Verify GCP credentials file exists
+        run: |
+          sudo ls -l /tmp/gcp-key.json
+          sudo cat /tmp/gcp-key.json
 
       - name: Deploy to GCP with sudo
         run: |
