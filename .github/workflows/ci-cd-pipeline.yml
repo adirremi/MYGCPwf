@@ -16,12 +16,7 @@ jobs:
       - name: Create GCP credentials file with Python
         run: |
           echo "Creating GCP credentials file..."
-          sudo python3 -c "
-import os
-json_content = os.getenv('GCP_CREDENTIALS')
-with open('/tmp/gcp-key.json', 'w') as f:
-    f.write(json_content)
-"
+          sudo python3 -c "import os; json_content = os.getenv('GCP_CREDENTIALS'); with open('/tmp/gcp-key.json', 'w') as f: f.write(json_content)"
 
       - name: Verify GCP credentials file exists
         run: |
