@@ -13,22 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run tests
-        run: echo "Running tests..."
-
-      - name: Install Google Cloud CLI
-        run: |
-          echo "Installing Google Cloud CLI..."
-          curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-432.0.0-linux-x86_64.tar.gz
-          tar -xf google-cloud-cli-432.0.0-linux-x86_64.tar.gz
-          ./google-cloud-sdk/install.sh -q
-          export PATH=$PATH:$(pwd)/google-cloud-sdk/bin
-          gcloud --version
-
       - name: Create GCP credentials file
         run: |
-          echo "${{ secrets.GCP_CREDENTIALS }}" | sed 's/\\n/\n/g' > /tmp/gcp-key.json
-          cat /tmp/gcp-key.json  # להציג את תוכן הקובץ כדי לוודא שהוא תקין
+          echo "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
+
+      - name: Verify GCP credentials file
+        run: |
+          echo "Verifying GCP credentials file..."
+          cat /tmp/gcp-key.json
 
       - name: Deploy to GCP
         run: |
