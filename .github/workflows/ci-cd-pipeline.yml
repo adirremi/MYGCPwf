@@ -24,13 +24,8 @@ jobs:
           ./google-cloud-sdk/install.sh -q
           export PATH=$PATH:$(pwd)/google-cloud-sdk/bin
           gcloud --version
-
-      - name: Create GCP credentials file  # יצירת הקובץ מה-Secret
-        run: |
-          printf '%s' "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
-
       - name: Deploy to GCP
         run: |
           echo "Deploying to GCP..."
-          gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+          gcloud auth activate-service-account --key-file ${{ secrets.GCP_CREDENTIALS }}
           gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
