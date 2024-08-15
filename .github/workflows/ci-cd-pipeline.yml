@@ -27,4 +27,4 @@ jobs:
         run: |
           echo "Deploying to GCP..."
           gcloud auth activate-service-account --key-file ${{ secrets.GCP_CREDENTIALS }}
-          gcloud compute ssh my-instance-name --zone "us-central1-a" --command "bash -s" < install.sh
+          gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
