@@ -24,7 +24,6 @@ jobs:
           ./google-cloud-sdk/install.sh -q
           export PATH=$PATH:$(pwd)/google-cloud-sdk/bin
           gcloud --version
-          
 
       - name: Deploy to GCP
         run: |
