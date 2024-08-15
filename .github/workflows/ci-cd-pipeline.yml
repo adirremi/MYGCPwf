@@ -13,18 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create GCP credentials file with Python
-        run: |
-          echo "Creating GCP credentials file..."
-          python -c 'import os, json; json_content = os.getenv("GCP_CREDENTIALS"); with open("/tmp/gcp-key.json", "w") as f: f.write(json_content)'
-
-      - name: Verify GCP credentials file
-        run: |
-          echo "Verifying GCP credentials file..."
-          cat /tmp/gcp-key.json
-
-      - name: Deploy to GCP
+      - name: Deploy to GCP with sudo
         run: |
           echo "Deploying to GCP..."
-          gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
-          gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
+          sudo gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+          sudo gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
