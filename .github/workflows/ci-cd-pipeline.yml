@@ -13,8 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create GCP credentials file
+        run: echo "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
+
       - name: Deploy to GCP
         run: |
           echo "Deploying to GCP..."
-          echo "${{ secrets.GCP_CREDENTIALS }}" | gcloud auth activate-service-account --key-file=/dev/stdin
+          gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
           gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
