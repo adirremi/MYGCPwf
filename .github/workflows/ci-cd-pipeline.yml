@@ -27,7 +27,8 @@ jobs:
 
       - name: Create GCP credentials file
         run: |
-          printf '%s' "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
+          echo "${{ secrets.GCP_CREDENTIALS }}" | sed 's/\\n/\
+/g' > /tmp/gcp-key.json
           cat /tmp/gcp-key.json  # להציג את תוכן הקובץ כדי לוודא שהוא תקין
 
       - name: Deploy to GCP
