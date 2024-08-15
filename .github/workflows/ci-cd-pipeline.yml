@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # עדכון לשימוש בגירסה v3 שמותאמת ל-Node.js חדש
+        uses: actions/checkout@v4  # שימוש בגירסה v4 שמותאמת ל-Node.js 20
 
       - name: Run tests
         run: echo "Running tests..." 
