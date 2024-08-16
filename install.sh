@@ -9,7 +9,8 @@ sudo apt-get upgrade -y
 
 # Install or update Apache
 sudo apt-get install -y apache2
-echo "<h1>Hey Amir /n It works!</h1>" | sudo tee /var/www/html/index.html # יוצר דף אינטרנט פשוט
+echo -e "<h1>Hey Amir\nIt works!</h1>" | sudo tee /var/www/html/index.html
+ # יוצר דף אינטרנט פשוט
 # Debug: Apache installed or updated
 echo "Apache installed or updated."
 
