@@ -54,4 +54,4 @@ jobs:
       - name: Test HTTP request to Apache server
         run: |
           echo "Testing HTTP request..."
-          curl http://YOUR_SERVER_IP_OR_DOMAIN
+          curl http://34.172.53.61
