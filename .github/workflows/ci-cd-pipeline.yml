@@ -28,12 +28,12 @@ jobs:
       - name: Create GCP credentials file from Base64
         run: |
           echo "Creating GCP credentials file from Base64..."
-          echo "${{ secrets.GCP_CREDENTIALS}}" | base64 --decode > /tmp/gcp-key.json
+          echo "${{ secrets.GCP_CREDENTIALS }}" | base64 --decode > /tmp/gcp-key.json
 
       - name: Verify GCP credentials file exists
         run: |
           cat /tmp/gcp-key.json
-          
+
       - name: Configure GCP project
         run: |
           echo "Configuring GCP project..."
@@ -45,3 +45,13 @@ jobs:
           echo "Deploying to GCP..."
           gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
           gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
+
+      - name: Check Apache status
+        run: |
+          echo "Checking Apache status..."
+          gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "sudo systemctl status apache2"
+
+      - name: Test HTTP request to Apache server
+        run: |
+          echo "Testing HTTP request..."
+          curl http://YOUR_SERVER_IP_OR_DOMAIN
