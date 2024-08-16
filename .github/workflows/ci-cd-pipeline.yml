@@ -13,19 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create GCP credentials file
+      - name: Create and print GCP credentials file
         run: |
           echo "Creating GCP credentials file..."
-          printf '%s' "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
-
-
-      - name: Verify GCP credentials file exists
-        run: |
-          sudo ls -l /tmp/gcp-key.json
-          sudo cat /tmp/gcp-key.json
-
-      - name: Deploy to GCP with sudo
-        run: |
-          echo "Deploying to GCP..."
-          sudo gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
-          sudo gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
+          echo "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
+          echo "Printing GCP credentials file..."
+          cat /tmp/gcp-key.json
