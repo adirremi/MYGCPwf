@@ -18,6 +18,7 @@ jobs:
           echo "Creating GCP credentials file..."
           printf '%s' "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
 
+
       - name: Verify GCP credentials file exists
         run: |
           sudo ls -l /tmp/gcp-key.json
