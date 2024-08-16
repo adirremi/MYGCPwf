@@ -21,6 +21,12 @@ jobs:
       - name: Verify GCP credentials file exists
         run: |
           cat /tmp/gcp-key.json
+          
+      - name: Configure GCP project
+        run: |
+          echo "Configuring GCP project..."
+          gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+          gcloud config set project lsa-data-425320
 
       - name: Deploy to GCP
         run: |
