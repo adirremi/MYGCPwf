@@ -6,15 +6,12 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
-
-      - name: Run tests
-        run: echo "Running tests..."
 
       - name: Install Google Cloud CLI
         run: |
@@ -30,23 +27,21 @@ jobs:
           echo "Creating GCP credentials file from Base64..."
           echo "${{ secrets.GCP_CREDENTIALS }}" | base64 --decode > /tmp/gcp-key.json
 
-      - name: Verify GCP credentials file exists
+      - name: Authenticate to Google Cloud
         run: |
-          cat /tmp/gcp-key.json
-
-      - name: Configure GCP project
-        run: |
-          echo "Configuring GCP project..."
+          echo "Authenticating to Google Cloud..."
           gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
           gcloud config set project lsa-data-425320
 
-      - name: Deploy to GCP
+      - name: Copy install.sh to GCP server
         run: |
-          echo "Deploying to GCP..."
-          gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
           echo "Copying install.sh to GCP server..."
-          sudo gcloud compute scp install.sh gcp-web-server:/home/adirremi54_gmail_com/install.sh --zone "us-central1-c"
-          gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
+          gcloud compute scp install.sh gcp-web-server:/tmp/install.sh --zone "us-central1-c"
+
+      - name: Run install.sh on GCP server
+        run: |
+          echo "Running install.sh on GCP server..."
+          gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash /tmp/install.sh"
 
       - name: Check Apache status
         run: |
