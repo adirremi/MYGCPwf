@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create GCP credentials file with Python
+      - name: Create GCP credentials file
         run: |
           echo "Creating GCP credentials file..."
-          sudo python3 -c "import os; json_content = os.getenv('GCP_CREDENTIALS'); with open('/tmp/gcp-key.json', 'w') as f: f.write(json_content)"
+          echo "${{ secrets.GCP_CREDENTIALS }}" | base64 --decode > /tmp/gcp-key.json
 
       - name: Verify GCP credentials file exists
         run: |
