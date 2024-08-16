@@ -16,9 +16,7 @@ jobs:
       - name: Create GCP credentials file
         run: |
           echo "Creating GCP credentials file..."
-          cat <<EOF > /tmp/gcp-key.json
-${{ secrets.GCP_CREDENTIALS }}
-EOF
+          printf '%s' "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
 
       - name: Verify GCP credentials file exists
         run: |
@@ -29,4 +27,4 @@ EOF
         run: |
           echo "Deploying to GCP..."
           sudo gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
-          sudo gcloud
+          sudo gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
