@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create GCP credentials file
+      - name: Create GCP credentials file from Base64
         run: |
-          echo "Creating GCP credentials file..."
-          printf '%s' "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
+          echo "Creating GCP credentials file from Base64..."
+          echo "${{ secrets.GCP_CREDENTIALS}}" | base64 --decode > /tmp/gcp-key.json
 
       - name: Verify GCP credentials file exists
         run: |
