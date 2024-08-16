@@ -45,7 +45,7 @@ jobs:
           echo "Deploying to GCP..."
           gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
           echo "Copying install.sh to GCP server..."
-          gcloud compute scp install.sh gcp-web-server:/home/adirremi54_gmail_com/install.sh --zone "us-central1-c"
+          sudo gcloud compute scp install.sh gcp-web-server:/home/adirremi54_gmail_com/install.sh --zone "us-central1-c"
           gcloud compute ssh gcp-web-server --zone "us-central1-c" --command "bash -s" < install.sh
 
       - name: Check Apache status
