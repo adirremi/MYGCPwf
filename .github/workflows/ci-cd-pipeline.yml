@@ -16,7 +16,8 @@ jobs:
       - name: Create GCP credentials file
         run: |
           echo "Creating GCP credentials file..."
-          echo "${{ secrets.GCP_CREDENTIALS }}" | sed 's/\\n/\n/g' > /tmp/gcp-key.json
+          echo "${{ secrets.GCP_CREDENTIALS }}" > /tmp/gcp-key.json
+          sed -i 's/\\n/\n/g' /tmp/gcp-key.json
 
       - name: Verify GCP credentials file exists
         run: |
